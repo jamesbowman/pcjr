@@ -116,6 +116,9 @@
 : main
   banner
 
+  d# 50000 begin
+    1- dup 0=
+  until drop
   h# 1111 h# 2222 h# 3333
   snap
 ;
