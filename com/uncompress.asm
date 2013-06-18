@@ -7,6 +7,7 @@
 
 start: 
         mov   cx,[cdata+4]
+        add   cx,8+cdata-start
         mov   ax,ds
         add   ax,1000h
         mov   es,ax
@@ -43,7 +44,5 @@ continue:
         pop   ds
 
         retf      ; }
-
 %include "LZ4_8088.ASM"
-
 cdata:
