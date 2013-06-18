@@ -6,6 +6,7 @@
 ; Jump to new copy, with 
 
 start: 
+        mov   cx,[cdata+4]
         mov   ax,ds
         add   ax,1000h
         mov   es,ax
@@ -37,7 +38,6 @@ continue:
         push  di
 
         call  lz4_decompress
-        int 3
         mov   cx,ax ; length of program in CX
         push  es
         pop   ds
@@ -47,4 +47,3 @@ continue:
 %include "LZ4_8088.ASM"
 
 cdata:
-        ; %include "hdr.i"

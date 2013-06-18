@@ -22,11 +22,10 @@
 ;         ...so preserve what you need before calling this code.
 
 lz4_decompress:
-        int 3
         push    di              ;save original starting offset (in case != 0)
         cld                     ;make strings copy forward
-        ; lodsw
-        ; lodsw                   ;skip magic number, smaller than "add si,4"
+        lodsw
+        lodsw                   ;skip magic number, smaller than "add si,4"
         lodsw                   ;load chunk size low 16-bit word
         xchg    bx,ax           ;BX = size of compressed chunk
         add     bx,si           ;BX = threshold to stop decompression
@@ -83,7 +82,6 @@ lz4_decompress:
         ret
 
 @done:
-      int 3
         pop     ax              ;retrieve previous starting offset
         sub     di,ax           ;subtract prev offset from where we are now
         xchg    ax,di           ;AX = decompressed size

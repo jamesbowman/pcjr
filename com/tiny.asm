@@ -6,6 +6,12 @@ start:
         call  hex4
         call  cr
 
+        ; mov   si,book
+        ; mov   di,8000h
+        ; call  lz4_decompress
+        ; call  hex4
+        ; call  cr
+
         mov   ah,09
         mov   dx,message
         int   21h
@@ -46,3 +52,6 @@ emit:
         ret
 
 message   db "**************************************************", 13,10,"$"
+; %include "LZ4_8088.ASM"
+; book:
+;         %include "hdr.i"
