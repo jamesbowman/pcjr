@@ -1,8 +1,8 @@
 : aword  tab ." dw " type cr ;
 
-:: and  s" and"   aword ;
-:: or   s" or "   aword ;
-:: xor  s" xor"   aword ;
+:: and  s" _and"   aword ;
+:: or   s" _or "   aword ;
+:: xor  s" _xor"   aword ;
 
 :: lshift  s" lshift"   aword ;
 :: rshift  s" rshift"   aword ;

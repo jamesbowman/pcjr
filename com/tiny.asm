@@ -93,11 +93,11 @@ plus:
         pop   ax
         add   cx,ax
         jmp   next
-xor:
+_xor:
         pop   ax
         xor   cx,ax
         jmp   next
-and:
+_and:
         pop   ax
         and   cx,ax
         jmp   next
