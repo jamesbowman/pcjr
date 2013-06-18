@@ -9,28 +9,22 @@ start:
 
         mov   si,end_bytecode-2
         mov   di,rstack
-
-next:
-        lodsw
-        cmp   ax,bytecode
-        jb    codeword
-        mov   [di],si
-        add   di,2
-        xchg  si,ax
         jmp   next
-codeword:
-        jmp   ax
 
+
+%macro  NXT   0
+        jmp   short next
+%endmacro
 exit:
         sub   di,2
         mov   si,[di]
-        jmp   next
+        NXT
 
 lit:
         lodsw
         push  cx
         xchg  ax,cx
-        jmp   next
+        NXT
 
 quit:
         mov   ax,4c00h
@@ -42,7 +36,7 @@ zbranch:
         pop   cx
         jnz   next
         xchg  si,ax
-        jmp   next
+        NXT
 
 emit:
         mov   dl,cl
@@ -50,19 +44,19 @@ emit:
         int   21h
 
         pop   cx
-        jmp   next
+        NXT
 
 lshift:
         pop   ax
         shl   ax,cl
         xchg  ax,cx
-        jmp   next
+        NXT
 
 rshift:
         pop   ax
         shr   ax,cl
         xchg  ax,cx
-        jmp   next
+        NXT
 
 depth:
         push  cx
@@ -70,93 +64,106 @@ depth:
         neg   cx
         shr   cx,1
         sub   cx,2
-        jmp   next
+        NXT
 
 tor:
         mov   [di],cx
         add   di,2
         pop   cx
-        jmp   next
+        NXT
 
 rfrom:
         push  cx
         sub   di,2
         mov   cx,[di]
-        jmp   next
+        NXT
 
 minus:
         xchg  ax,cx
         pop   cx
         sub   cx,ax
-        jmp   next
+        NXT
 plus:
         pop   ax
         add   cx,ax
-        jmp   next
+        NXT
 _xor:
         pop   ax
         xor   cx,ax
-        jmp   next
+        NXT
 _and:
         pop   ax
         and   cx,ax
-        jmp   next
+        NXT
 drop:
         pop   cx
-        jmp   next
+        NXT
 nip:
         pop   ax
-        jmp   next
+        NXT
+
 swap:
         pop   ax
         xchg  ax,cx
         push  ax
-        jmp   next
+        NXT
 over:
         pop   ax
         push  ax
         push  cx
         xchg  ax,cx
-        jmp   next
+        NXT
+
 dup:
         push  cx
-        jmp   next
+        NXT
 cat:
         xchg  bx,cx
         mov   cl,[bx]
         mov   ch,0
-        jmp   next
+        NXT
+
+next:
+        lodsw
+        cmp   ax,bytecode
+        jb    codeword
+        mov   [di],si
+        add   di,2
+        xchg  si,ax
+        NXT
+codeword:
+        jmp   ax
 wat:
         xchg  bx,cx
         mov   ax,[bx]
-        jmp   next
+        NXT
 wstore:
         xchg  bx,cx
         pop   ax
         mov   [bx],ax
-        jmp   next
+        NXT
 above:
         pop   ax
         cmp   ax,cx
         ja    mk1
         xor   cx,cx
-        jmp   next
+        NXT
 
 eq:
         pop   ax
         cmp   ax,cx
         jz    mk1
         xor   cx,cx
-        jmp   next
+        NXT
 
 gt:
         pop   ax
         cmp   ax,cx
         jg    mk1
         xor   cx,cx
-        jmp   next
+        NXT
 mk1:    mov   cx,1
-        jmp   next
+        NXT
 
 bytecode:
         %include "bytecode.i"
