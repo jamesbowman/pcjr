@@ -87,6 +87,10 @@ plus:
         pop   ax
         add   cx,ax
         NXT
+_or:
+        pop   ax
+        or    cx,ax
+        NXT
 _xor:
         pop   ax
         xor   cx,ax
@@ -120,6 +124,7 @@ dup:
 cat:
         xchg  bx,cx
         mov   cl,[bx]
+zex:    ; zero-extend cl, then NXT
         mov   ch,0
         NXT
 
@@ -136,7 +141,7 @@ codeword:
 wat:
         xchg  bx,cx
         mov   ax,[bx]
-        NXT
+        jmp   short drop
 wstore:
         xchg  bx,cx
         pop   ax
@@ -164,6 +169,17 @@ gt:
         NXT
 mk1:    mov   cx,1
         NXT
+
+ioat:
+        xchg  dx,cx
+        in    al,dx
+        mov   cl,al
+        jmp   short zex
+iostore:
+        xchg  dx,cx
+        pop   ax
+        out   dx,al
+        jmp   drop
 
 bytecode:
         %include "bytecode.i"

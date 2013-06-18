@@ -103,6 +103,7 @@ warnings off
 
 :: d# bl parse 10 base>number ;
 :: h# bl parse 16 base>number ;
+:: b# bl parse 2 base>number ;
 :: ['] ' >body @
   tab ." dw lit" cr
   tab ." dw " .label cr ;
