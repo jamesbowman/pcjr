@@ -3,7 +3,9 @@
 
 ; Compressed loader.
 ; Copy self to upper memory (current + 64K)
-; Jump to new copy, with 
+; Far jump to new copy
+; Decompress payload to to home segment
+; Jump to home segment 0100h
 
 start: 
         mov   cx,[cdata+4]
@@ -12,7 +14,7 @@ start:
         add   ax,1000h
         mov   es,ax
 
-        mov   si,0x100
+        mov   si,0100h
         mov   di,si
         rep   movsb
 
@@ -33,13 +35,12 @@ continue:
         ; push the return address
         ; uncompress from DS:SI to ES:DI
 
-        mov   di,100h
+        mov   di,0100h
         mov   si,cdata
         push  es  ; for below {
         push  di
 
         call  lz4_decompress
-        mov   cx,ax ; length of program in CX
         push  es
         pop   ds
 

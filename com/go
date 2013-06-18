@@ -1,8 +1,9 @@
-# make ; exit
+make ; exit
 # python prep0.py &&
 nasm -l tiny.lst -o tiny.com tiny.asm
 # python prep.py &&
-$HOME/lz4-read-only/lz4c.exe -y -cl tiny.com tiny.lz4
+$HOME/lz4-read-only/lz4c -y -cl tiny.com tiny.lz4
 nasm -l lst -o uncompress.com uncompress.asm
 cat uncompress.com tiny.lz4 > x.com
 ls -l x.com
+
