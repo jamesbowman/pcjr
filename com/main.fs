@@ -53,6 +53,7 @@
 ;
 
 ( Debugging                                  JCB 17:58 06/12/13)
+1 [IF]
 : cr
   d# 13 emit
   d# 10 emit
@@ -106,8 +107,10 @@
   cr
   bar
 ;
+[THEN]
+
 ( Zen timer port                             JCB 13:56 06/18/13)
-\
+0 [IF]
 \ The address of the timer 0 count registers in the 8253.
 \
 0x40 constant TIMER_0_8253
@@ -140,6 +143,7 @@
     d# 8 lshift or
     negate
 ;
+[ENDIF]
 
 ( Pictured numeric output                    JCB 15:18 08/21/12)
 
@@ -173,21 +177,4 @@ create pad $14 allot create pad|
 : main
   d# 10 base !
   banner
-
-  \ h# 9218947a. h# 9fef um/mod
-  d# 12345678.
-  <# # # # [char] . hold #s #>
-  [char] < emit
-  type
-  [char] > emit
-  snap
-  ztimer
-  ztimer
-  \ d# 1 begin
-  \   1- dup 0=
-  \ until drop
-  special
-  timer@
-  snap
-  \ swap - .
 ;

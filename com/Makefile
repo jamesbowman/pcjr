@@ -17,3 +17,4 @@ tiny.lz4: tiny.com
 
 x.com: uncompress.com tiny.lz4
 	cat uncompress.com tiny.lz4 > x.com
+	ls -l x.com
