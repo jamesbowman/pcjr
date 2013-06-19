@@ -182,6 +182,16 @@ iostore:
         out   dx,al
         jmp   drop
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+special:
+        %rep    1000
+          mov ax,0
+        %endrep
+        jmp   next
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 bytecode:
         %include "bytecode.i"
 end_bytecode:

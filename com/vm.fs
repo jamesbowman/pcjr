@@ -17,6 +17,7 @@
 :: key     s" key    "   aword ;
 :: emit    s" emit   "   aword ;
 :: quit    s" quit   "   aword ;
+:: special s" special"   aword ;
 
 :: dup     s" dup    "   aword ;
 :: drop    s" drop   "   aword ;

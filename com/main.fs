@@ -152,10 +152,11 @@
 
   ztimer
   ztimer
-  timer@ 
-  d# 10000 begin
-    1- dup 0=
-  until drop
+  \ d# 1 begin
+  \   1- dup 0=
+  \ until drop
+  special
   timer@
-  swap - .
+  snap
+  \ swap - .
 ;
