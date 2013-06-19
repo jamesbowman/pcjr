@@ -52,6 +52,14 @@
     dup >r cell+ @ r> @
 ;
 
+( Console IO                                 JCB 13:55 06/19/13)
+: emit
+  d# 2 int21
+;
+: quit
+  h# 4c int21
+;
+
 ( Debugging                                  JCB 17:58 06/12/13)
 1 [IF]
 : cr
@@ -177,4 +185,6 @@ create pad $14 allot create pad|
 : main
   d# 10 base !
   banner
+  h# 947
+  snap
 ;

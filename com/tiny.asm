@@ -20,10 +20,6 @@ exit:
         mov   si,[di]
         NXT
 
-quit:
-        mov   ax,4c00h
-        int   21h
-
 branch:
         lodsw
         xchg  si,ax
@@ -34,14 +30,6 @@ zbranch:
         pop   cx
         jnz   next
         xchg  si,ax
-        NXT
-
-emit:
-        mov   dl,cl
-        mov   ah,02
-        int   21h
-
-        pop   cx
         NXT
 
 int21:
@@ -138,6 +126,10 @@ next:
 codeword:
         jmp   ax
 
+wstore:
+        xchg  bx,cx
+        pop   ax
+        mov   [bx],ax
 drop:
         pop   cx
         NXT
@@ -150,11 +142,6 @@ wat:
         xchg  bx,cx
         mov   cx,[bx]
         NXT
-wstore:
-        xchg  bx,cx
-        pop   ax
-        mov   [bx],ax
-        jmp   short drop
 above:
         pop   ax
         cmp   ax,cx
@@ -225,7 +212,6 @@ esstore:
 bytecode:
         %include "bytecode.i"
 end_bytecode:
-        dw    quit
 
 rstack:
         times 64 dw 0
