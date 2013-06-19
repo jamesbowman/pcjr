@@ -18,6 +18,8 @@
 :: emit    s" emit   "   aword ;
 :: quit    s" quit   "   aword ;
 :: special s" special"   aword ;
+:: /mod    s" slashmod"  aword ;
+:: um/mod  s" umslashmod" aword ;
 
 :: dup     s" dup    "   aword ;
 :: drop    s" drop   "   aword ;

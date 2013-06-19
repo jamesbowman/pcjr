@@ -175,6 +175,22 @@ iostore:
         out   dx,al
         jmp   drop
 
+slashmod:
+        pop   ax      ; ax cx
+        cwd
+        idiv  cx
+divresult:
+        push  dx
+        xchg  cx,ax
+        NXT
+
+umslashmod:
+        pop   dx      ; dx:ax cx
+        pop   ax
+        div   cx
+        jmp   short divresult
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 special:

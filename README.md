@@ -14,3 +14,5 @@ Reference
 ---------
 
 http://archive.org/details/IbmPcjrTechnicalReference
+
+http://pdos.csail.mit.edu/6.828/2006/readings/hardware/vgadoc/PCJR.TXT

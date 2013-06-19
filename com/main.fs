@@ -150,8 +150,8 @@
 : main
   banner
 
-  h# 11 h# 22 h# 33 swap
-  depth . cr snap
+  h# 9218947a. h# 9fef um/mod
+  snap
   ztimer
   ztimer
   \ d# 1 begin
