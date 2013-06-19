@@ -14,10 +14,13 @@
 :: >       s" gt     "   aword ;
 :: u>      s" above  "   aword ;
 
+:: int21   s" int21  "   aword ;
 :: key     s" key    "   aword ;
 :: emit    s" emit   "   aword ;
 :: quit    s" quit   "   aword ;
 :: special s" special"   aword ;
+:: >es     s" toes"      aword ;
+:: es:!    s" esstore"   aword ;
 :: /mod    s" slashmod"  aword ;
 :: um/mod  s" umslashmod" aword ;
 

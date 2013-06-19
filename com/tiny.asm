@@ -20,7 +20,6 @@ exit:
         mov   si,[di]
         NXT
 
-
 quit:
         mov   ax,4c00h
         int   21h
@@ -45,6 +44,11 @@ emit:
         pop   cx
         NXT
 
+int21:
+        mov   ah,cl
+        pop   dx
+        int   21h
+        jmp   short drop
 lshift:
         pop   ax
         shl   ax,cl
@@ -96,9 +100,6 @@ _and:
         pop   ax
         and   cx,ax
         NXT
-drop:
-        pop   cx
-        NXT
 nip:
         pop   ax
         NXT
@@ -136,6 +137,10 @@ next:
         NXT
 codeword:
         jmp   ax
+
+drop:
+        pop   cx
+        NXT
 cstore:
         xchg  bx,cx
         pop   ax
@@ -198,6 +203,14 @@ umslashmod:
         pop   ax
         div   cx
         jmp   short divresult
+
+toes:   mov   es,cx
+        jmp   short drop
+esstore:
+        xchg  bx,cx
+        pop   ax
+        mov   [es:bx],ax
+        jmp   short drop
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
