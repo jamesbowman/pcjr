@@ -48,6 +48,10 @@ warnings off
     tab ." dw lit" cr
     tab ." dw " . cr
 ;
+: labelliteral ( u -- )
+    tab ." dw lit" cr
+    tab ." dw " .label cr
+;
 
 ( Defining words for target                  JCB 19:04 05/02/12)
 
@@ -62,9 +66,25 @@ warnings off
 
 \ :: ;fallthru ;
 \ 
+
 :: constant
     create  ,
     does>   @ literal
+;
+
+:: variable
+    create  label dup , label:
+            tab ." dw  0" cr
+    does>   @ labelliteral
+;
+
+:: create
+    create  label dup , label:
+    does>   @ labelliteral
+;
+
+:: allot ( u -- )
+    tab ." times " . ." db 0" cr
 ;
 
 ( Switching between target and meta          JCB 19:08 05/02/12)

@@ -25,6 +25,10 @@ quit:
         mov   ax,4c00h
         int   21h
 
+branch:
+        lodsw
+        xchg  si,ax
+        NXT
 zbranch:
         lodsw
         cmp   cx,0
@@ -132,15 +136,20 @@ next:
         NXT
 codeword:
         jmp   ax
+cstore:
+        xchg  bx,cx
+        pop   ax
+        mov   [bx],al
+        jmp   short drop
 wat:
         xchg  bx,cx
-        mov   ax,[bx]
-        jmp   short drop
+        mov   cx,[bx]
+        NXT
 wstore:
         xchg  bx,cx
         pop   ax
         mov   [bx],ax
-        NXT
+        jmp   short drop
 above:
         pop   ax
         cmp   ax,cx
@@ -161,7 +170,7 @@ gt:
         jg    mk1
         xor   cx,cx
         NXT
-mk1:    mov   cx,1
+mk1:    mov   cx,0ffffh
         NXT
 
 ioat:
@@ -173,7 +182,7 @@ iostore:
         xchg  dx,cx
         pop   ax
         out   dx,al
-        jmp   drop
+        jmp   short drop
 
 slashmod:
         pop   ax      ; ax cx
@@ -190,11 +199,10 @@ umslashmod:
         div   cx
         jmp   short divresult
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 special:
-        %rep    1000
+        %rep    0
           mov ax,0
         %endrep
         jmp   next
