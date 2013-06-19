@@ -22,6 +22,7 @@ exit:
 
 lit:
         lodsw
+pushax:
         push  cx
         xchg  ax,cx
         NXT
