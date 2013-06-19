@@ -20,12 +20,6 @@ exit:
         mov   si,[di]
         NXT
 
-lit:
-        lodsw
-pushax:
-        push  cx
-        xchg  ax,cx
-        NXT
 
 quit:
         mov   ax,4c00h
@@ -60,12 +54,11 @@ rshift:
         NXT
 
 depth:
-        push  cx
-        mov   cx,sp
-        neg   cx
-        shr   cx,1
-        sub   cx,2
-        NXT
+        mov   ax,sp
+        neg   ax
+        shr   ax,1
+        dec   ax
+        jmp   short pushax
 
 tor:
         mov   [di],cx
@@ -74,10 +67,9 @@ tor:
         NXT
 
 rfrom:
-        push  cx
         sub   di,2
-        mov   cx,[di]
-        NXT
+        mov   ax,[di]
+        jmp   short pushax
 
 minus:
         xchg  ax,cx
@@ -109,15 +101,11 @@ nip:
 
 swap:
         pop   ax
-        xchg  ax,cx
-        push  ax
-        NXT
+        jmp   short pushax
 over:
         pop   ax
         push  ax
-        push  cx
-        xchg  ax,cx
-        NXT
+        jmp   short pushax
 
 dup:
         push  cx
@@ -125,10 +113,15 @@ dup:
 cat:
         xchg  bx,cx
         mov   cl,[bx]
-zex:    ; zero-extend cl, then NXT
+zex:    ; zero-extend cl to cx, then NXT
         mov   ch,0
         NXT
 
+lit:
+        lodsw
+pushax:
+        push  cx
+        xchg  ax,cx
 next:
         lodsw
         cmp   ax,bytecode
