@@ -16,3 +16,11 @@ Reference
 http://archive.org/details/IbmPcjrTechnicalReference
 
 http://pdos.csail.mit.edu/6.828/2006/readings/hardware/vgadoc/PCJR.TXT
+
+BIOS data area:
+
+http://stanislavs.org/helppc/bios_data_area.html
+
+http://www.seasip.info/VintagePC/cga.html
+
+http://ece425web.groups.et.byu.net/stable/labs/8086InstructionSet.html

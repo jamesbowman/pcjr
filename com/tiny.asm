@@ -36,7 +36,9 @@ int21:
         mov   ah,cl
         pop   dx
         int   21h
-        jmp   short drop
+        xchg  ax,cx
+        NXT
+
 lshift:
         pop   ax
         shl   ax,cl
@@ -65,6 +67,10 @@ tor:
 rfrom:
         sub   di,2
         mov   ax,[di]
+        jmp   short pushax
+
+rat:
+        mov   ax,[di-2]
         jmp   short pushax
 
 minus:
@@ -191,6 +197,14 @@ umslashmod:
         div   cx
         jmp   short divresult
 
+eol:
+        inc   cx
+        mov   ax,cx
+        mov   bp,sp
+        xor   ax,[bp]
+        not   ax
+        jmp   short pushax
+
 toes:   mov   es,cx
         jmp   short drop
 esstore:
@@ -209,9 +223,25 @@ esstore:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+int10:  ; ( ax -- )
+        xchg  ax,cx
+        int   10h
+        jmp   drop
+
+movsi:  ; ( src dst cnt -- )
+        xchg  bp,di
+        xchg  bx,si
+        pop   di
+        pop   si
+        rep movsb
+        xchg  bp,di
+        xchg  bx,si
+        jmp   drop
+
 bytecode:
         %include "bytecode.i"
 end_bytecode:
 
+        %include "assets.i"
 rstack:
         times 64 dw 0

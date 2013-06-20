@@ -121,6 +121,10 @@ warnings off
         then
     then ;
 
+:: xasm 
+    tab ." dw " bl parse type cr
+;
+
 :: d# bl parse 10 base>number ;
 :: h# bl parse 16 base>number ;
 :: b# bl parse 2 base>number ;
@@ -128,6 +132,9 @@ warnings off
   tab ." dw lit" cr
   tab ." dw " .label cr ;
 :: [char] char literal ;
+:: l# tab ." dw lit" cr 
+    tab ." dw " bl parse type cr
+;
 
 ( Conditionals                               JCB 13:12 09/03/10)
 

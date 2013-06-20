@@ -27,6 +27,7 @@
 \ Arithmetic
 : 1-        true + ;
 : 1+        d# 1 + ;
+: 2+        d# 2 + ;
 : negate    1- invert ;
 : within  ( test low high -- flag )
     over - >r - r>  u<
@@ -52,12 +53,19 @@
     dup >r cell+ @ r> @
 ;
 
-( Console IO                                 JCB 13:55 06/19/13)
+( BIOS operations                            JCB 13:55 06/19/13)
+
 : emit
-  d# 2 int21
+  d# 2 int21 drop
 ;
+
+: key
+  d# 0 h# 08 int21
+  h# ff and
+;
+
 : quit
-  h# 4c int21
+  false h# 4c int21 drop
 ;
 
 ( Debugging                                  JCB 17:58 06/12/13)
@@ -87,7 +95,7 @@
 
 : snap0
   depth if
-    >r snap0 r> hex4
+    >r snap0 r> hex4 space
   then
 ;
 
@@ -182,9 +190,40 @@ create pad $14 allot create pad|
   2drop
 ;
 
+: vidfill
+    >r
+    d# 32768
+    d# 0
+    begin
+        r@ over es:!
+        2+ 2dup =
+    until
+    2drop
+    r> drop
+;
+
+: pause
+  d# 60000 begin 1- dup 0= until drop
+;
+
 : main
   d# 10 base !
   banner
   h# 947
+  h# 0009 xasm int10
+  h# 0b800 >es
+
+  h# 2222 vidfill
+  h# 1111 vidfill
+
+  l# sunset
+  h# 0000
+  d# 32768
+  xasm movsi
+
+  key drop
+
+  h# 0003 xasm int10
   snap
 ;
+
