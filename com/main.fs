@@ -206,20 +206,45 @@ create pad $14 allot create pad|
   d# 60000 begin 1- dup 0= until drop
 ;
 
+: scramble
+  >r
+  h# 8000 h# 0 begin
+    2dup <>
+  while
+    r> xasm lfsr dup >r over es:!
+    2+
+  repeat 2drop
+  r>
+;
+
 : main
   d# 10 base !
   banner
+
   h# 947
   h# 0009 xasm int10
   h# 0b800 >es
 
-  h# 2222 vidfill
   h# 1111 vidfill
 
   l# sunset
   h# 0000
   d# 32768
   xasm movsi
+
+  key drop
+
+  d# 0 d# 0 do
+      h# f h# 14 vga!
+      h# 0 h# 14 vga!
+  loop
+    
+  \ h# 8000
+  \ d# 2 d# 0 do
+  \     scramble
+  \     h# 1111 vidfill
+  \ loop
+  \ drop
 
   key drop
 

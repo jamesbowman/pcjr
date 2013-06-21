@@ -1,5 +1,12 @@
 : aword  tab ." dw " type cr ;
 
+: map
+    ::
+    postpone s"
+    postpone aword
+    postpone ;
+;
+
 :: and  s" _and"   aword ;
 :: or   s" _or "   aword ;
 :: xor  s" _xor"   aword ;
@@ -41,3 +48,4 @@
 :: r@      s" rat    "   aword ;
 :: r>      s" rfrom  "   aword ;
 
+map vga!    vgastore"

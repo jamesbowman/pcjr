@@ -16,7 +16,8 @@ start:
         jmp   short next
 %endmacro
 exit:
-        sub   di,2
+        dec   di
+        dec   di
         mov   si,[di]
         NXT
 
@@ -58,14 +59,21 @@ depth:
         dec   ax
         jmp   short pushax
 
+_do:    ; ( b a ) means that b is [di-2], a at [di-4]
+        mov   [di],cx
+        inc   di
+        inc   di
+        pop   cx
 tor:
         mov   [di],cx
-        add   di,2
+        inc   di
+        inc   di
         pop   cx
         NXT
 
 rfrom:
-        sub   di,2
+        dec   di
+        dec   di
         mov   ax,[di]
         jmp   short pushax
 
@@ -126,7 +134,8 @@ next:
         cmp   ax,bytecode
         jb    codeword
         mov   [di],si
-        add   di,2
+        inc   di
+        inc   di
         xchg  si,ax
         NXT
 codeword:
@@ -191,6 +200,16 @@ divresult:
         xchg  cx,ax
         NXT
 
+_loop:
+        inc   word [di-4]
+        mov   ax,[di-4]
+        cmp   ax,[di-2]
+        jnz   branch
+        sub   di,4
+        inc   si
+        inc   si
+        NXT
+
 umslashmod:
         pop   dx      ; dx:ax cx
         pop   ax
@@ -203,7 +222,7 @@ eol:
         mov   bp,sp
         xor   ax,[bp]
         not   ax
-        jmp   short pushax
+        jmp   pushax
 
 toes:   mov   es,cx
         jmp   short drop
@@ -236,6 +255,26 @@ movsi:  ; ( src dst cnt -- )
         rep movsb
         xchg  bp,di
         xchg  bx,si
+        jmp   drop
+
+lfsr:
+        shr   cx,1
+        mov   al,cl
+        ror   al,1
+        sbb   al,al
+        and   al,0xb4
+        xor   ch,al
+        jmp   next
+
+vgastore:
+        mov   dx,3dah
+        in    al,dx
+        xchg  ax,cx
+        out   dx,al
+
+        pop   ax
+        out   dx,al
+
         jmp   drop
 
 bytecode:

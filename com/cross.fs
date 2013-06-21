@@ -178,6 +178,14 @@ warnings off
     s" branch" branch
     label:
 ;
+:: do
+    tab ." dw _do" cr
+    label dup label:
+;
+:: loop
+    s" _loop" branch
+;
+
 \ 
 \ :: for      s" d# 0 >r" evaluate there ;
 \ :: next     s" loop" evaluate 2/ 0branch s" rdrop" evaluate ;

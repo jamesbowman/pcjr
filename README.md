@@ -24,3 +24,6 @@ http://stanislavs.org/helppc/bios_data_area.html
 http://www.seasip.info/VintagePC/cga.html
 
 http://ece425web.groups.et.byu.net/stable/labs/8086InstructionSet.html
+
+SN76489:
+ftp://ftp.whtech.com/datasheets%20and%20manuals/Datasheets%20-%20TI/SN76489.pdf

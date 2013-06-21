@@ -1,7 +1,7 @@
 import Image
 import array
 
-im = Image.open("baby.png")
+im = Image.open("sunset.png")
 
 pal_image= Image.new("P", (1,1))
 pal_image.putpalette( (
