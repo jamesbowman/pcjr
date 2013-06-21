@@ -3,7 +3,7 @@
 
 all: tiny.com hello.com uncompress.com x.com
 
-main.i: main.fs cross.fs vm.fs 
+main.i: main.fs *.fs
 	gforth cross.fs vm.fs main.fs > main.i
 
 assets.i: Makefile *.png gen.py
