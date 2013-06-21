@@ -270,7 +270,7 @@ vgastore:
         jmp     drop
 
 bytecode:
-        %include BYTECODE
+        BYTECODE
 end_bytecode:
 
         %include "assets.i"

@@ -9,7 +9,7 @@ main.i: main.fs *.fs
 assets.i: Makefile *.png gen.py
 	python gen.py
 
-tiny.com: tiny.asm main.i assets.i
+tiny.com: tiny.asm main.i assets.i common.asm
 
 hello.com: hello.asm
 
