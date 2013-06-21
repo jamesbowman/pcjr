@@ -3,13 +3,13 @@
 
 all: tiny.com hello.com uncompress.com x.com
 
-bytecode.i: cross.fs vm.fs main.fs
-	gforth cross.fs vm.fs main.fs > bytecode.i
+main.i: main.fs cross.fs vm.fs 
+	gforth cross.fs vm.fs main.fs > main.i
 
 assets.i: Makefile *.png gen.py
 	python gen.py
 
-tiny.com: tiny.asm bytecode.i assets.i
+tiny.com: tiny.asm main.i assets.i
 
 hello.com: hello.asm
 
