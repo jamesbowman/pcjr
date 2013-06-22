@@ -1,16 +1,29 @@
 ( BIOS operations                            JCB 13:55 06/19/13)
 
 : emit
-  d# 2 int21 drop
+    h# 200 int21 drop
 ;
 
 : key
-  d# 0 h# 08 int21
-  h# ff and
+    false h# 800 int21
+    h# ff and
+;
+
+: terminate ( code -- )
+    h# 4c00 or false swap int21
 ;
 
 : quit
-  false h# 4c int21 drop
+    d# 0 terminate
 ;
 
+: abort
+    [char] * emit
+    [char] A emit
+    d# 1 terminate
+;
+
+: throw
+    if abort then
+;
 

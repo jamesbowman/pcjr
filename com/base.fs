@@ -40,17 +40,18 @@
 : max       2dup < ?: ;
 : cells     d# 2 lshift ;
 : cell+     d# 4 + ;
-: 2/        d# 1 rshift ;
 
 : count     dup 1+ swap c@ ;
 : bounds ( a u -- a+u a )
     over + swap ;
 
+: s>d       dup 0< ;
 : 2!
     dup >r ! r> cell+ !
 ;
 : 2@
     dup >r cell+ @ r> @
 ;
+
 
 

@@ -13,6 +13,7 @@
 
 :: lshift  s" lshift"   aword ;
 :: rshift  s" rshift"   aword ;
+:: 2/      s" _2div "   aword ;
 
 :: +       s" plus   "   aword ;
 :: -       s" minus  "   aword ;

@@ -34,7 +34,7 @@ zbranch:
         NXT
 
 int21:
-        mov     ah,cl
+        xchg    ax,cx
         pop     dx
         int     21h
         xchg    ax,cx
@@ -50,6 +50,10 @@ rshift:
         pop     ax
         shr     ax,cl
         xchg    ax,cx
+        NXT
+
+_2div:
+        sar     ax,1
         NXT
 
 depth:

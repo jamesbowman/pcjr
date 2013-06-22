@@ -1,15 +1,22 @@
 %.com: %.asm
 	nasm -o $*.com -l $*.lst $<
 
-all: hello.com main.com uncompress.com x.com
+%.i: %.fs
+	gforth cross.fs vm.fs $*.fs > $*.i
 
-main.i: main.fs *.fs
-	gforth cross.fs vm.fs main.fs > main.i
+all: hello.com main.com unittest.com uncompress.com x.com
 
 assets.i: Makefile *.png gen.py
 	python gen.py
 
 main.com: main.asm main.i assets.i common.asm
+
+main.i: main.fs *.fs
+
+unittest.com: unittest.asm unittest.i common.asm
+
+unitest.i: unitest.fs *.fs
+
 
 hello.com: hello.asm
 
@@ -21,3 +28,6 @@ main.lz4: main.com
 x.com: uncompress.com main.lz4
 	cat uncompress.com main.lz4 > x.com
 	ls -l x.com
+
+clean::
+	rm -rf *.com *.i *.lz4
