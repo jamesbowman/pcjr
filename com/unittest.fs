@@ -26,6 +26,12 @@ include numeric.fs
 
   d# 2 part
   d# -1 2/              h# ffff T
+  d# 1 2/               h# 0000 T
+  h# 5555 2/            h# 2aaa T
 
   depth d# 0 T
+  cr
+  [char] O emit
+  [char] K emit
+  quit
 ;

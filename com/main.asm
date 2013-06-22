@@ -2,3 +2,4 @@
   %include "main.i"
 %endmacro
 %include "common.asm"
+        %include "assets.i"

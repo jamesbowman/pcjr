@@ -7,14 +7,14 @@ start:
 ; CX: top of stack
 ; DI: RP, stack grows up, DI points to empty slot
 
-        mov     si,end_bytecode-2
-        mov     di,rstack
-        jmp     next
-
-
 %macro  NXT     0
         jmp     short next
 %endmacro
+
+        mov     si,end_bytecode-2
+        mov     di,rstack
+        NXT
+
 exit:
         dec     di
         dec     di
@@ -53,7 +53,7 @@ rshift:
         NXT
 
 _2div:
-        sar     ax,1
+        sar     cx,1
         NXT
 
 depth:
@@ -277,7 +277,6 @@ bytecode:
         BYTECODE
 end_bytecode:
 
-        %include "assets.i"
 rstack:
         times 64 dw 0
 
