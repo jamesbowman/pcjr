@@ -4,26 +4,17 @@ include debug.fs
 include zen.fs
 include numeric.fs
 
-: vidfill
-    >r
-    d# 32768
-    d# 0
-    begin
-        r@ over es:!
-        2+ 2dup =
-    until
-    2drop
-    r> drop
+: vidfill ( vv )
+    d# 0 d# 32768 xasm _stosw
 ;
 
 : scramble
   >r
   h# 8000 h# 0 begin
-    2dup <>
-  while
     r> xasm lfsr dup >r over es:!
     2+
-  repeat 2drop
+    2dup =
+  until 2drop
   r>
 ;
 
@@ -32,26 +23,34 @@ include numeric.fs
 ;
 
 : main
-  d# 10 base !
-  banner
+    d# 10 base !
+    banner
 
-  h# 947
-  h# 0009 xasm int10
-  h# 0b800 >es
+    h# 947
+    h# 0009 xasm int10
+    h# 0b800 >es
 
-  h# 1111 vidfill
+    h# 1111 vidfill
+    key drop
+    h# 2222 vidfill
+    key drop
+    h# 4444 vidfill
+    key drop
 
-  l# sunset
-  h# 0000
-  d# 32768
-  xasm movsi
+    h# 8000 scramble drop
+    key drop
+      
+    l# sunset
+    h# 0000
+    d# 32768
+    xasm movsi
 
-  key drop
+\ key drop
 
-  d# 0 d# 0 do
-      h# f h# 14 vga!
-      h# 0 h# 14 vga!
-  loop
+\  d# 0 d# 0 do
+\      h# f h# 14 vga!
+\      h# 0 h# 14 vga!
+\  loop
     
   \ h# 8000
   \ d# 2 d# 0 do

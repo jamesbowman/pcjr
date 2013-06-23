@@ -1,3 +1,4 @@
+# gforth cross.fs vm.fs main.fs ; exit
 make ; exit
 # python prep0.py &&
 nasm -l tiny.lst -o tiny.com tiny.asm

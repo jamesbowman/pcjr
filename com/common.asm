@@ -11,6 +11,10 @@ start:
         jmp     short next
 %endmacro
 
+%macro  NXTAX   0
+        jmp     short loadax
+%endmacro
+
         mov     si,end_bytecode-2
         mov     di,rstack
         NXT
@@ -37,20 +41,17 @@ int21:
         xchg    ax,cx
         pop     dx
         int     21h
-        xchg    ax,cx
-        NXT
+        NXTAX
 
 lshift:
         pop     ax
         shl     ax,cl
-        xchg    ax,cx
-        NXT
+        NXTAX
 
 rshift:
         pop     ax
         shr     ax,cl
-        xchg    ax,cx
-        NXT
+        NXTAX
 
 _2div:
         sar     cx,1
@@ -63,17 +64,16 @@ depth:
         dec     ax
         jmp     short pushax
 
-_do:    ; ( b a ) means that b is [di-2], a at [di-4]
-        mov     [di],cx
-        inc     di
-        inc     di
-        pop     cx
+;_do:    ; ( b a ) means that b is [di-2], a at [di-4]
+;        mov     [di],cx
+;        inc     di
+;        inc     di
+;        pop     cx
 tor:
         mov     [di],cx
         inc     di
         inc     di
-        pop     cx
-        NXT
+        jmp     short drop
 
 rfrom:
         dec     di
@@ -132,6 +132,7 @@ lit:
         lodsw
 pushax:
         push    cx
+loadax:
         xchg    ax,cx
 next:
         lodsw
@@ -163,26 +164,28 @@ wat:
         NXT
 above:
         pop     ax
-        cmp     ax,cx
-        ja      mk1
-        xor     cx,cx
+        cmp     cx,ax
+        sbb     cx,cx
         NXT
 
 eq:
         pop     ax
         cmp     ax,cx
-        jz      mk1
-        xor     cx,cx
+        mov     cx,0
+        jne     short next
+oneminus:
+        dec     cx
+        NXT
+oneplus:
+        inc     cx
         NXT
 
 gt:
         pop     ax
         cmp     ax,cx
-        jg      mk1
-        xor     cx,cx
-        NXT
-mk1:    mov     cx,0ffffh
-        NXT
+        mov     cx,0
+        jle     short next
+        jmp     short oneminus
 
 ioat:
         xchg    dx,cx
@@ -201,18 +204,17 @@ slashmod:
         idiv    cx
 divresult:
         push    dx
-        xchg    cx,ax
-        NXT
+        NXTAX
 
-_loop:
-        inc     word [di-4]
-        mov     ax,[di-4]
-        cmp     ax,[di-2]
-        jnz     branch
-        sub     di,4
-        inc     si
-        inc     si
-        NXT
+;_loop:
+;        inc     word [di-4]
+;        mov     ax,[di-4]
+;        cmp     ax,[di-2]
+;        jnz     branch
+;        sub     di,4
+;        inc     si
+;        inc     si
+;        NXT
 
 umslashmod:
         pop     dx      ; dx:ax cx
@@ -253,10 +255,17 @@ movsi:  ; ( src dst cnt -- )
         xchg    bx,si
         jmp     drop
 
+_stosw:  ; ( val16 dst cnt -- )
+        xchg    bp,di
+        shr     cx,1
+        pop     di
+        pop     ax
+        rep stosw
+        xchg    bp,di
+        jmp     drop
+
 lfsr:
         shr     cx,1
-        mov     al,cl
-        ror     al,1
         sbb     al,al
         and     al,0xb4
         xor     ch,al
@@ -272,6 +281,25 @@ vgastore:
         out     dx,al
 
         jmp     drop
+
+rpit:
+        cli
+        mov     al, 00000000b    ; al = channel in bits 6 and 7, remaining bits clear
+        out     0x43, al         ; Send the latch command
+ 
+        in      al, 0x40          ; al = low byte of count
+        mov     ah, al           ; ah = low byte of count
+        in      al, 0x40          ; al = high byte of count
+        xchg    al,ah        ; al = low byte, ah = high byte
+        jmp     pushax
+
+simple:
+        push    cx
+        mov     di,8000h
+        mov     cx,1000
+        rep stosw
+        pop     cx
+        jmp     next
 
 bytecode:
         BYTECODE

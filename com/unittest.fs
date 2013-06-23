@@ -57,6 +57,25 @@ include numeric.fs
     d# 1000.                d# 0 T d# 1000 T
     d# -1000.               h# FFFF T h# FC18 T
 
+    d# 7 part
+    h# 0002 h# 0001 =       false T
+    h# ffff h# 0001 =       false T
+    h# ffff h# ffff =       true T
+    h# 0100 h# 8000 =       false T
+
+    d# 8 part
+    h# 0002 h# 0001 u>      true T
+    h# ffff h# 0001 u>      true T
+    h# ffff h# ffff u>      false T
+    h# 0100 h# 8000 u>      false T
+
+    d# 9 part
+    h# 0002 h# 0001 >       true T
+    h# ffff h# 0001 >       false T
+    h# ffff h# ffff >       false T
+    h# 0100 h# 8000 >       true T
+
+
     depth d# 0 T
     cr
     [char] O emit

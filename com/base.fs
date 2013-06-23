@@ -25,9 +25,7 @@
 : u<        swap u> ;
 
 \ Arithmetic
-: 1-        true + ;
-: 1+        d# 1 + ;
-: 2+        d# 2 + ;
+: 2+        1+ 1+ ;
 : negate    1- invert ;
 : within  ( test low high -- flag )
     over - >r - r>  u<

@@ -5,6 +5,7 @@
 \   Where machine.fs defines the target machine
 \   and program.fs is the target program
 \
+include strings.fs
 
 wordlist constant target-wordlist
 : add-order ( wid -- ) >r get-order r> swap 1+ set-order ;
@@ -46,7 +47,7 @@ warnings off
 
 : literal
     tab ." dw lit" cr
-    tab ." dw " . cr
+    tab ." dw " $ffff and . cr
 ;
 : labelliteral ( u -- )
     tab ." dw lit" cr
@@ -198,7 +199,6 @@ warnings off
         1-
     repeat
 ;
-include strings.fs
 next-arg 2dup .trim >str constant prefix.
 : .suffix  ( c-addr u -- c-addr u ) \ e.g. "bar" -> "foo.bar"
     >str prefix. +str str@

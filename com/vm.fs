@@ -17,6 +17,8 @@
 
 :: +       s" plus   "   aword ;
 :: -       s" minus  "   aword ;
+:: 1-      s" oneminus"  aword ;
+:: 1+      s" oneplus"   aword ;
 
 :: =       s" eq     "   aword ;
 :: >       s" gt     "   aword ;
@@ -50,3 +52,14 @@
 :: r>      s" rfrom  "   aword ;
 
 map vga!    vgastore"
+
+: str-name ( "name" -- addr ) >in @ name >str swap >in ! ; immediate
+
+: xword
+    str-name
+    :
+     literal  
+    postpone str@
+    postpone type
+    postpone ;
+;
