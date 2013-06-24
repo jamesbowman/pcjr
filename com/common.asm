@@ -31,7 +31,7 @@ branch:
         NXT
 zbranch:
         lodsw
-        cmp     cx,0
+        or      cx,cx
         pop     cx
         jnz     next
         xchg    si,ax
