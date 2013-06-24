@@ -48,6 +48,16 @@ include numeric.fs
     while
         1+
     repeat                  d# 8 T d# 8 T
+    true if
+        d# 6
+    else
+        d# 7
+    then                    d# 6 T
+    false if
+        d# 6
+    else
+        d# 7
+    then                    d# 7 T
 
     d# 5 part
     d# 100 d# 101 max       d# 101 T

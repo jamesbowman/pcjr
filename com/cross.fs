@@ -152,13 +152,13 @@ warnings off
 :: then
     label:
 ;
-\ 
-\ :: else
-\     there
-\     0 ubranch 
-\     swap resolve
-\ ;
-\ 
+
+:: else
+    label
+    dup s" branch" branch
+    swap label:
+;
+
 :: begin
   label dup label:
 ;
