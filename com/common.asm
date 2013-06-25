@@ -25,17 +25,15 @@ exit:
         mov     si,[di]
         NXT
 
-branch:
-        lodsw
-        xchg    si,ax
-        NXT
 zbranch:
         lodsw
         or      cx,cx
         pop     cx
         jnz     next
-        xchg    si,ax
-        NXT
+        jmp     short jmpsi
+branch:
+        lodsw
+        jmp     jmpsi
 
 int21:
         xchg    ax,cx
@@ -141,6 +139,7 @@ next:
         mov     [di],si
         inc     di
         inc     di
+jmpsi:
         xchg    si,ax
         NXT
 codeword:
