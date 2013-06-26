@@ -1,7 +1,7 @@
         cpu 8086
         org 100h 
 
-LPT_DATA        equ     378h
+LPT_DATA        equ     378h ;                                                                                  data0(2)
 LPT_STATUS      equ     379h ;  busy(11) ack(10) paperout12) selectin(13) error(15)
 LPT_CONTROL     equ     37ah ;                                            selectp(17) initialize(16) autolf(14) strobe(14)
 
@@ -11,26 +11,29 @@ L0:
         mov     dx,LPT_CONTROL
         mov     al,00000100b
         out     dx,al
-%if 0
+        dec     dx      ; LPT_STATUS
+
+montor:
+%if 1                   ; monitor STATUS
         in      al,dx
-        or      al,30h
-        mov     dl,al
-        mov     ah,2
-        int     21h
-        jmp     short L0
+        int     3
+        jmp     short montor
 %endif
+
+%if 0
+        dec     dx      ; LPT_DATA
 
         mov     di,0200h
         mov     cx,256
 readloop:
 ; Wait for valid high
-        dec     dx      ;LPT_STATUS
+        inc     dx      ;LPT_STATUS
 waitvalid1:
         in      al,dx
         test    al,8
         jz      short waitvalid1
         and     al,0f0h ; preserve in bl
-        xchg    ax,bx
+        xchg    bx,ax
 
 ; Signal READY by raising DATA.0
         dec     dx      ; LPT_DATA
@@ -49,7 +52,7 @@ waitvalid1:
 waitvalid0:
         in      al,dx
         test    al,8
-        jnz     short waitvalid0
+        ; jnz     short waitvalid0
 
 ; Drop ready
         dec     dx      ; LPT_DATA
@@ -57,10 +60,11 @@ waitvalid0:
         out     dx,al
 
 ; Store bl
-        mov     al,bl
+        xchg    ax,bx
         stosb
         loop    readloop
         int     3
+%endif
 
 %if 0
         mov     ah,09

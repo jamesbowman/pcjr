@@ -20,12 +20,20 @@ include numeric.fs
     d# 10 base !
     banner
 
-    d# 20 d# 0 begin
+    d# 0.
+    d# 100 d# 0 begin
+        2>r
         xasm rpit
+        \ d# 100 d# 0 begin
+        \     1+ 2dup =
+        \ until 2drop
         xasm simple
         xasm rpit
-        - d# 0 <# #s #> type cr
-        1+ 2dup =
-    until
+        -
+        \ d# 110 - d# 4 um*
+        d# 0 d+
+        2r> 1+ 2dup =
+    until 2drop d# 100 um/mod nip
+    d# 0 <# #s #> type cr
     quit
 ;

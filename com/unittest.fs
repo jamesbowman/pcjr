@@ -11,6 +11,9 @@ include numeric.fs
 : T
     <> throw
 ;
+: dT
+    d<> throw
+;
 
 : d123
     d# 1 d# 2 d# 3
@@ -48,6 +51,16 @@ include numeric.fs
     while
         1+
     repeat                  d# 8 T d# 8 T
+    true if
+        d# 6
+    else
+        d# 7
+    then                    d# 6 T
+    false if
+        d# 6
+    else
+        d# 7
+    then                    d# 7 T
 
     d# 5 part
     d# 100 d# 101 max       d# 101 T
@@ -75,6 +88,33 @@ include numeric.fs
     h# ffff h# ffff >       false T
     h# 0100 h# 8000 >       true T
 
+    d# 10 part
+    d# 1 >r
+    d# 10
+    begin
+        r> dup 2* + >r
+    loop
+    r>                      d# 59049 T
+
+    d# 11 part
+    h# dead h# beef
+    um*
+                            h# a6144983. dT
+
+    d# 12 part
+    h# a6144983. h# dead um/mod
+                            h# beef T d# 0 T
+
+    d# 13 part
+    d# 7700 d# 99 d# 100 */
+                            d# 7623 T
+    d# -7700 d# 99 d# 100 */
+                            d# -7623 T
+
+    d# 14 part
+    h# aabbcc. 2>r
+    2r@                     h# aabbcc. dT
+    2r>                     h# aabbcc. dT
 
     depth d# 0 T
     cr

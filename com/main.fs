@@ -4,8 +4,8 @@ include debug.fs
 include zen.fs
 include numeric.fs
 
-: vidfill ( vv )
-    d# 0 d# 32768 xasm _stosw
+: vidfill ( v16 -- )
+    d# 0 d# 16384 rot fillw
 ;
 
 : scramble
@@ -43,7 +43,7 @@ include numeric.fs
     l# sunset
     h# 0000
     d# 32768
-    xasm movsi
+    move
 
 \ key drop
 

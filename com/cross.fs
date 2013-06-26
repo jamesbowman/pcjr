@@ -152,13 +152,13 @@ warnings off
 :: then
     label:
 ;
-\ 
-\ :: else
-\     there
-\     0 ubranch 
-\     swap resolve
-\ ;
-\ 
+
+:: else
+    label
+    dup s" branch" branch
+    swap label:
+;
+
 :: begin
   label dup label:
 ;
@@ -178,10 +178,6 @@ warnings off
     swap
     s" branch" branch
     label:
-;
-:: do
-    tab ." dw _do" cr
-    label dup label:
 ;
 :: loop
     s" _loop" branch
