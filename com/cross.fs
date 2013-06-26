@@ -179,10 +179,6 @@ warnings off
     s" branch" branch
     label:
 ;
-:: do
-    tab ." dw _do" cr
-    label dup label:
-;
 :: loop
     s" _loop" branch
 ;

@@ -1,5 +1,7 @@
-%macro BYTECODE 0
-  %include "main.i"
-%endmacro
 %include "common.asm"
-        %include "assets.i"
+
+bytecode:
+%include "main.i"
+end_bytecode:
+
+%include "assets.i"

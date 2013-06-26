@@ -1,4 +1,9 @@
-%macro BYTECODE 0
-  %include "bench.i"
-%endmacro
 %include "common.asm"
+
+simple:
+        ret
+
+bytecode:
+%include "bench.i"
+end_bytecode:
+

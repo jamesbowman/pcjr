@@ -11,6 +11,7 @@
 : ?dup  dup if dup then ;
 : 2dup  over over ;
 : +!    tuck @ + swap ! ;
+: 2*    dup + ;
 
 \ Comparisons
 : invert    true xor ;
@@ -43,7 +44,6 @@
 : bounds ( a u -- a+u a )
     over + swap ;
 
-: s>d       dup 0< ;
 : 2!
     dup >r ! r> cell+ !
 ;
@@ -51,5 +51,38 @@
     dup >r cell+ @ r> @
 ;
 
+( Double word                                JCB 10:14 06/25/13)
 
+: s>d       dup 0< ;
+: d+                              ( augend . addend . -- sum . )
+    rot + >r                      ( augend addend)
+    over +                        ( augend sum)
+    dup rot                       ( sum sum augend)
+    u< if                         ( sum)
+        r> 1+
+    else
+        r>
+    then                          ( sum . )
+;
+: d1+       d# 1. d+ ;
+: dnegate
+    invert swap invert swap
+    d1+
+;
+: d- dnegate d+ ;
+: d=
+    rot = -rot = and
+;
+: dabs ( d -- ud ) dup 0< if dnegate then ;
 
+: *
+    um* drop
+;
+
+: SM/REM ( d n -- r q ) ( 6.1.2214 ) ( symmetric )
+  OVER >R >R  DABS R@ ABS UM/MOD
+  R> R@ XOR 0< IF NEGATE THEN  R> 0< IF >R NEGATE R> THEN ;
+: /     /mod nip ;
+: mod   /mod drop ;
+: */mod >R M* R> SM/REM ;
+: */    */mod nip ;

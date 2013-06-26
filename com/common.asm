@@ -30,10 +30,15 @@ zbranch:
         or      cx,cx
         pop     cx
         jnz     next
-        jmp     short jmpsi
+        jmp     short jmpax
 branch:
         lodsw
-        jmp     jmpsi
+        jmp     jmpax
+
+_loop:
+        lodsw   ;
+        loop    jmpax
+        jmp     short drop
 
 int21:
         xchg    ax,cx
@@ -139,7 +144,7 @@ next:
         mov     [di],si
         inc     di
         inc     di
-jmpsi:
+jmpax:
         xchg    si,ax
         NXT
 codeword:
@@ -205,20 +210,22 @@ divresult:
         push    dx
         NXTAX
 
-;_loop:
-;        inc     word [di-4]
-;        mov     ax,[di-4]
-;        cmp     ax,[di-2]
-;        jnz     branch
-;        sub     di,4
-;        inc     si
-;        inc     si
-;        NXT
-
 umslashmod:
         pop     dx      ; dx:ax cx
         pop     ax
         div     cx
+        jmp     short divresult
+
+umstar:
+        pop     ax
+        mul     cx
+        xchg    ax,dx
+        jmp     short divresult
+
+mstar:
+        pop     ax
+        imul    cx
+        xchg    ax,dx
         jmp     short divresult
 
 toes:   mov     es,cx
@@ -244,22 +251,34 @@ int10:  ; ( ax -- )
         int     10h
         jmp     drop
 
-movsi:  ; ( src dst cnt -- )
+move:   ; ( src dst cnt -- )
         xchg    bp,di
         xchg    bx,si
         pop     di
         pop     si
+        shr     cx,1
+        rep movsw
+        adc     cx,cx
         rep movsb
         xchg    bp,di
         xchg    bx,si
         jmp     drop
 
-_stosw:  ; ( val16 dst cnt -- )
+fillw:  ; ( dst cnt val16 -- )
         xchg    bp,di
-        shr     cx,1
-        pop     di
-        pop     ax
+        pop     ax      ; cnt
+        pop     di      ; dst
+        xchg    cx,ax
         rep stosw
+        xchg    bp,di
+        jmp     drop
+
+fill:  ; ( dst cnt val16 -- )
+        xchg    bp,di
+        pop     ax      ; cnt
+        pop     di      ; dst
+        xchg    cx,ax
+        rep stosb
         xchg    bp,di
         jmp     drop
 
@@ -292,18 +311,5 @@ rpit:
         xchg    al,ah        ; al = low byte, ah = high byte
         jmp     pushax
 
-simple:
-        push    cx
-        mov     di,8000h
-        mov     cx,1000
-        rep stosw
-        pop     cx
-        jmp     next
-
-bytecode:
-        BYTECODE
-end_bytecode:
-
 rstack:
         times 64 dw 0
-

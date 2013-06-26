@@ -19,6 +19,8 @@
 :: -       s" minus  "   aword ;
 :: 1-      s" oneminus"  aword ;
 :: 1+      s" oneplus"   aword ;
+:: um*     s" umstar  "   aword ;
+:: m*      s" mstar  "   aword ;
 
 :: =       s" eq     "   aword ;
 :: >       s" gt     "   aword ;
@@ -50,6 +52,10 @@
 :: >r      s" tor    "   aword ;
 :: r@      s" rat    "   aword ;
 :: r>      s" rfrom  "   aword ;
+
+:: move    s" move" aword ;
+:: fill    s" fill" aword ;
+:: fillw   s" fillw" aword ;
 
 map vga!    vgastore"
 

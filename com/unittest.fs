@@ -85,6 +85,28 @@ include numeric.fs
     h# ffff h# ffff >       false T
     h# 0100 h# 8000 >       true T
 
+    d# 10 part
+    d# 1 >r
+    d# 10
+    begin
+        r> dup 2* + >r
+    loop
+    r>                      d# 59049 T
+
+    d# 11 part
+    h# dead h# beef
+    um*
+    h# a6144983. d=         true T
+
+    d# 12 part
+    h# a6144983. h# dead um/mod
+                            h# beef T d# 0 T
+
+    d# 13 part
+    d# 7700 d# 99 d# 100 */
+                            d# 7623 T
+    d# -7700 d# 99 d# 100 */
+                            d# -7623 T
 
     depth d# 0 T
     cr

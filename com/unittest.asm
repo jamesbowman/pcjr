@@ -1,4 +1,4 @@
-%macro BYTECODE 0
-  %include "unittest.i"
-%endmacro
 %include "common.asm"
+bytecode:
+%include "unittest.i"
+end_bytecode:
