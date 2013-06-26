@@ -138,10 +138,11 @@ next:
         lodsw
         cmp     ax,bytecode
         jb      codeword
-        mov     [di],si
-        inc     di
-        inc     di
         xchg    si,ax
+        ; Hmm, "ds stosw" does not work on dosbox
+        mov     [di],ax
+        inc     di
+        inc     di
         NXT
 codeword:
         jmp     ax
