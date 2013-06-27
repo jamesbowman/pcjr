@@ -3,7 +3,7 @@
 
 LPT_DATA        equ     378h ;                                                                                  data0(2)
 LPT_STATUS      equ     379h ;  busy(11) ack(10) paperout12) selectin(13) error(15)
-LPT_CONTROL     equ     37ah ;                                            selectp(17) initialize(16) autolf(14) strobe(14)
+LPT_CONTROL     equ     37ah ;                                            selectp(17) initialize(16) autolf(14) strobe(1)
 
 start: 
 
@@ -14,18 +14,21 @@ L0:
         dec     dx      ; LPT_STATUS
 
 montor:
-%if 1                   ; monitor STATUS
+%if 0                   ; monitor STATUS
         in      al,dx
         int     3
         jmp     short montor
 %endif
 
-%if 0
+%if 1
         dec     dx      ; LPT_DATA
 
         mov     di,0200h
         mov     cx,256
 readloop:
+; Drop ready
+        mov     al,0
+        out     dx,al
 ; Wait for valid high
         inc     dx      ;LPT_STATUS
 waitvalid1:
@@ -54,10 +57,7 @@ waitvalid0:
         test    al,8
         ; jnz     short waitvalid0
 
-; Drop ready
         dec     dx      ; LPT_DATA
-        mov     al,0
-        out     dx,al
 
 ; Store bl
         xchg    ax,bx
