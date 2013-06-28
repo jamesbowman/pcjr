@@ -58,6 +58,9 @@
 :: fillw   s" fillw" aword ;
 
 map vga!    vgastore"
+\ map 6845!   _6845store"
+map out     _out"
+map in      _in"
 
 : str-name ( "name" -- addr ) >in @ name >str swap >in ! ; immediate
 
@@ -69,3 +72,4 @@ map vga!    vgastore"
     postpone type
     postpone ;
 ;
+
