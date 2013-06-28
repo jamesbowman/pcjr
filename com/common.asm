@@ -150,6 +150,9 @@ jmpax:
 codeword:
         jmp     ax
 
+exec:
+        jmp     cx
+
 wstore:
         xchg    bx,cx
         pop     ax
@@ -247,8 +250,12 @@ esstore:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 int10:  ; ( ax -- )
+        push    si
+        push    di
         xchg    ax,cx
         int     10h
+        pop     di
+        pop     si
         jmp     drop
 
 move:   ; ( src dst cnt -- )

@@ -4,4 +4,4 @@ bytecode:
 %include "main.i"
 end_bytecode:
 
-%include "assets.i"
+; %include "assets.i"

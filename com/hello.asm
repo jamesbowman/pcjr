@@ -2,6 +2,11 @@
         org 100h 
 
 start: 
+        mov   ax,0009h
+        int     10h
+        mov   ax,0003h
+        int     10h
+
         mov   ah,09
         mov   dx,message
         int   21h

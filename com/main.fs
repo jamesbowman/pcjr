@@ -61,9 +61,8 @@ include numeric.fs
     banner
 
     h# 947
-    h# 0009 xasm int10
-    h# 0b800 >es
 
+<<<<<<< HEAD
     \ h# 1111 vidfill
     \ key drop
     \ h# 2222 vidfill
@@ -82,6 +81,34 @@ include numeric.fs
     \ move
 
     \ wobble
+=======
+    hex4 cr
+ h# 0008 xasm int10
+    \ key hex4 cr
+    h# 2 h# 02 vga!
+    h# 1b h# 00 vga!
+    h# 71 h# 00 
+    key drop
+ h# 0003 xasm int10
+    quit
+\   h# 0009 xasm int10
+\   h# 0b800 >es
+
+    h# 1111 vidfill
+\   key drop
+\   h# 2222 vidfill
+\   key drop
+\   h# 4444 vidfill
+\   key drop
+
+\   h# 8000 scramble drop
+\   key drop
+\     
+\   l# sunset
+\   h# 0000
+\   d# 32768
+\   move
+>>>>>>> 3bb181b5b20b1012b19401b458f5f62fb4d87bab
 
 \ key drop
 
@@ -99,7 +126,7 @@ include numeric.fs
 
   key drop
 
-  h# 0003 xasm int10
-  snap
+\ h# 0003 xasm int10
+  quit
 ;
 
