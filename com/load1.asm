@@ -15,9 +15,10 @@ start:
         mov     cx,RELOC1-RELOC0
         mov     si,RELOC0
         mov     di,100h-(RELOC1-RELOC0)
-        movsb
-        mov     ax,100h-(lptloader-RELOC0)
+        rep movsb
+        mov     ax,100h-(RELOC1-lptloader)
         mov     [5ch],ax
+        mov     [5eh],sp
         jmp     ax
 
         ; This section gets relocated to below 100h
@@ -73,6 +74,7 @@ waitvalid0:
 
 lptloader:
         mov     dx,LPT_DATA
+        mov     sp,[5eh]
         ; Expecting 50,a0,90,70
 get5:
         call    read4

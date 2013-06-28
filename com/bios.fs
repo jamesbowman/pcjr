@@ -14,7 +14,11 @@
 ;
 
 : quit
-    d# 0 terminate
+    h# 5c c@ d# 16 > if
+        h# 5c @ exec
+    else
+        d# 0 terminate
+    then
 ;
 
 : abort

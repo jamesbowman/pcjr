@@ -28,6 +28,7 @@
 
 :: int21   s" int21  "   aword ;
 :: eol     s" eol"    aword ;
+:: exec    s" exec"      aword ;
 :: >es     s" toes"      aword ;
 :: es:!    s" esstore"   aword ;
 :: /mod    s" slashmod"  aword ;
