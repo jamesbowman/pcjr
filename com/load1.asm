@@ -4,23 +4,23 @@ LPT_DATA        equ     378h ;                                                  
 LPT_STATUS      equ     379h ;  busy(11) ack(10) paperout12) selectin(13) error(15)
 LPT_CONTROL     equ     37ah ;                                            selectp(17) initialize(16) autolf(14) strobe(1)
 
-        section .loader
+        org     100h
 
 start: 
 
         mov     dx,LPT_CONTROL
         mov     al,00000100b
         out     dx,al
-        dec     dx      ; LPT_STATUS
-        dec     dx      ; LPT_DATA
         
         mov     cx,RELOC1-RELOC0
         mov     si,RELOC0
         mov     di,100h-(RELOC1-RELOC0)
         movsb
-        jmp     100h-(RELOC1-RELOC0)
+        mov     ax,100h-(lptloader-RELOC0)
+        mov     [5ch],ax
+        jmp     ax
 
-        ; This section gets relocated to lower memory
+        ; This section gets relocated to below 100h
 RELOC0:
 read16: ; ordered hi8, lo8
         call    read8
@@ -72,6 +72,7 @@ waitvalid0:
         ret
 
 lptloader:
+        mov     dx,LPT_DATA
         ; Expecting 50,a0,90,70
 get5:
         call    read4
@@ -93,21 +94,10 @@ is5:
 
         call    read16
         xchg    cx,ax
-        mov     di,200h
+        mov     di,100h
 rdloop:
         call    read8
         stosb
         loop    rdloop
-
-        int3
-        mov     ax,ds
-        add     ax,256/16       ; So that 200 becomes the new start
-        mov     ds,ax
-        mov     es,ax
-        mov     ss,ax
-
-        push    ax
-        mov     ax,100h
-        push    ax
-        retf
+        ; Because this section is relocated, fall through to 100h
 RELOC1:
