@@ -296,6 +296,20 @@ lfsr:
         xor     ch,al
         jmp     next
 
+_in:
+        xchg    dx,cx
+        in      al,dx
+        xor     ah,ah
+        xchg    cx,ax
+        jmp     next
+
+_out:
+        xchg    dx,cx
+        pop     ax
+        out     dx,al
+        jmp     drop
+
+%if 0
 vgastore:
         mov     dx,3dah
         in      al,dx
@@ -304,8 +318,18 @@ vgastore:
 
         pop     ax
         out     dx,al
-
         jmp     drop
+
+_6845store:
+        mov     dx,3d4h
+        xchg    ax,cx
+        out     dx,al
+        inc     dx
+
+        pop     ax
+        out     dx,al
+        jmp     drop
+%endif
 
 rpit:
         cli
