@@ -17,6 +17,7 @@ start:
 
         mov     si,end_bytecode-2
         mov     di,rstack
+        mov     sp,dstack+64
         NXT
 
 exit:
@@ -61,10 +62,9 @@ _2div:
         NXT
 
 depth:
-        mov     ax,sp
-        neg     ax
+        mov     ax,dstack+64
+        sub     ax,sp
         shr     ax,1
-        dec     ax
         jmp     short pushax
 
 ;_do:    ; ( b a ) means that b is [di-2], a at [di-4]
@@ -151,6 +151,8 @@ codeword:
         jmp     ax
 
 exec:
+        push    ds
+        pop     es
         jmp     cx
 
 wstore:
@@ -231,6 +233,10 @@ mstar:
         xchg    ax,dx
         jmp     short divresult
 
+dsfrom:
+        mov     ax,ds
+        jmp     short pushax
+
 toes:   mov     es,cx
         jmp     short drop
 esstore:
@@ -280,11 +286,15 @@ fillw:  ; ( dst cnt val16 -- )
         xchg    bp,di
         jmp     drop
 
-fill:  ; ( dst cnt val16 -- )
+fill:  ; ( dst cnt val -- )
         xchg    bp,di
         pop     ax      ; cnt
         pop     di      ; dst
         xchg    cx,ax
+        mov     ah,al
+        shr     cx,1
+        rep stosw
+        adc     cx,cx
         rep stosb
         xchg    bp,di
         jmp     drop
@@ -309,7 +319,6 @@ _out:
         out     dx,al
         jmp     drop
 
-%if 0
 vgastore:
         mov     dx,3dah
         in      al,dx
@@ -329,7 +338,6 @@ _6845store:
         pop     ax
         out     dx,al
         jmp     drop
-%endif
 
 rpit:
         cli
@@ -343,4 +351,6 @@ rpit:
         jmp     pushax
 
 rstack:
+        times 64 dw 0
+dstack:
         times 64 dw 0

@@ -55,7 +55,7 @@ waitvalid1:
 waitvalid0:
         in      al,dx
         test    al,8
-        ; jnz     short waitvalid0
+        jnz     short waitvalid0
 
         dec     dx      ; LPT_DATA
 

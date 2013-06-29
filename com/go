@@ -1,6 +1,7 @@
+# python card.py ; qiv card.png ; exit
 # gforth cross.fs vm.fs main.fs ; exit
 make &&
-python ../arduino/sender.py main.com ; exit
+python ../arduino/sender.py x.com ; exit
 # python prep0.py &&
 nasm -l tiny.lst -o tiny.com tiny.asm
 # python prep.py &&

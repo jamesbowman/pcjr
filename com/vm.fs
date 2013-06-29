@@ -33,6 +33,7 @@
 :: es:!    s" esstore"   aword ;
 :: /mod    s" slashmod"  aword ;
 :: um/mod  s" umslashmod" aword ;
+:: ds>     s" dsfrom"    aword ;
 
 :: dup     s" dup    "   aword ;
 :: drop    s" drop   "   aword ;
@@ -59,7 +60,7 @@
 :: fillw   s" fillw" aword ;
 
 map vga!    vgastore"
-\ map 6845!   _6845store"
+map 6845!   _6845store"
 map out     _out"
 map in      _in"
 
