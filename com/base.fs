@@ -9,7 +9,6 @@
 : tuck  swap over ;
 : 2drop drop drop ;
 : ?dup  dup if dup then ;
-: 2dup  over over ;
 : +!    tuck @ + swap ! ;
 : 2*    dup + ;
 

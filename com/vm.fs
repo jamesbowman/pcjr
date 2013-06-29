@@ -29,14 +29,16 @@
 :: int21   s" int21  "   aword ;
 :: eol     s" eol"    aword ;
 :: exec    s" exec"      aword ;
-:: >es     s" toes"      aword ;
-:: es:!    s" esstore"   aword ;
 :: /mod    s" slashmod"  aword ;
 :: um/mod  s" umslashmod" aword ;
+
 :: ds>     s" dsfrom"    aword ;
+:: >es     s" toes"      aword ;
+:: es:!    s" esstore"   aword ;
 
 :: dup     s" dup    "   aword ;
 :: drop    s" drop   "   aword ;
+:: 2dup    s" _2dup  "   aword ;
 
 :: !       s" wstore "   aword ;
 :: @       s" wat    "   aword ;
@@ -61,10 +63,16 @@
 
 :: lobyte  s" zex" aword ;
 
+map scratch scratch"
+map drawchar drawchar"
 map vga!    vgastore"
 map 6845!   _6845store"
 map out     _out"
 map in      _in"
+map cli     _cli"
+map sti     _sti"
+map down1   down1"
+map waitvsync   waitvsync"
 
 : str-name ( "name" -- addr ) >in @ name >str swap >in ! ; immediate
 

@@ -1,7 +1,7 @@
 import Image
 import array
 
-im = Image.open("baby.png")
+im = Image.open("card.png")
 
 i0 = 0
 i1 = 0x65

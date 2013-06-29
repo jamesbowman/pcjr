@@ -120,6 +120,10 @@ include numeric.fs
     2r@                     h# aabbcc. dT
     2r>                     h# aabbcc. dT
 
+    d# 15 part
+    h# 123456.  2dup
+                            h# 123456. dT h# 123456. dT
+
     d# 999 part
     depth d# 0 T
     cr

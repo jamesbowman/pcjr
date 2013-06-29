@@ -210,6 +210,19 @@ iostore:
         out     dx,al
         jmp     short drop
 
+down1:
+        add     cx,8192
+        jns     next
+        add     cx,(-4*8192 + 160)
+        NXT
+
+_2dup:
+        pop     ax
+        push    ax
+        push    cx
+        xchg    ax,cx
+        jmp     short pushax
+
 slashmod:
         pop     ax      ; ax cx
         cwd
@@ -238,7 +251,7 @@ mstar:
 
 dsfrom:
         mov     ax,ds
-        jmp     short pushax
+        jmp     pushax
 
 toes:   mov     es,cx
         jmp     short drop
@@ -322,6 +335,11 @@ _out:
         out     dx,al
         jmp     drop
 
+_cli:   cli
+        jmp     next
+_sti:   sti
+        jmp     next
+
 vgastore:
         mov     dx,3dah
         in      al,dx
@@ -330,6 +348,45 @@ vgastore:
 
         pop     ax
         out     dx,al
+        jmp     drop
+
+waitvsync:
+        mov     dx,3dah
+        mov     bl,8
+.whileVS1:
+        in      al,dx
+        test    al,bl
+        jnz     .whileVS1
+.whileVS0:
+        in      al,dx
+        test    al,bl
+        jz      .whileVS0
+        ; Now must be at rising edge of VSYNC
+        jmp     next
+
+rainbow:
+        mov     dx,3dah
+hor1:
+        in      al,dx
+        test    al,01h
+        jz      hor1
+        mov     ah,01h
+hor2:
+        in      al,dx
+        test    al,ah
+        jnz     hor2
+        ; Now in horizontal retrace
+
+        mov     al,14h
+        out     dx,al
+        mov     al,cl
+        out     dx,al
+
+        ; mov     al,02h
+        ; out     dx,al
+
+        loop    hor1
+
         jmp     drop
 
 _6845store:
@@ -353,7 +410,54 @@ rpit:
         xchg    al,ah        ; al = low byte, ah = high byte
         jmp     pushax
 
-scratch:
+drawchar: ; ( char addr -- ) draw an ascii char at video address
+        pop     ax
+        shl     ax,1
+        shl     ax,1
+        shl     ax,1
+        add     ax,0fa6eh
+
+        push    ds
+        push    si
+        push    di
+        xchg    si,ax
+        xchg    di,cx
+
+        ; SI is source glyph
+        ; DI is video dest
+
+        mov     ax,0f000h       ; BIOS segment
+        mov     ds,ax
+
+        mov     cx,8
+dline:
+        push    cx
+        lodsb
+        mov     bl,al
+        mov     cx,4
+d2pix:
+        rol     bl,1
+        sbb     ah,ah
+        and     ah,0f0h
+        rol     bl,1
+        sbb     al,al
+        and     al,0fh
+        or      al,ah
+        stosb
+        loop    d2pix
+        pop     cx
+
+        add     di,8192-4
+        jns     .next
+        add     di,(-4*8192 + 160)
+.next:
+
+        loop    dline
+
+        pop     di
+        pop     si
+        pop     ds
+        jmp     drop
 
 rstack:
         times 64 dw 0
