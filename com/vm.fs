@@ -57,6 +57,10 @@
 :: fill    s" fill" aword ;
 :: fillw   s" fillw" aword ;
 
+:: exit    s" exit" aword ;
+
+:: lobyte  s" zex" aword ;
+
 map vga!    vgastore"
 map 6845!   _6845store"
 map out     _out"

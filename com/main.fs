@@ -122,23 +122,8 @@ variable color
     \ ds> h# 100 + >es
     \ h# 0b800 >es
     h# 1800 >es
-    true if
-        h# 0 vidfill
 
-        d# 0 begin
-            dup setcolor
-            dup d# 7 and d# 40 * over d# 8 and d# 5 *
-            rect40
-            1+ dup d# 16 =
-        until drop
-
-        d# 7 setcolor d# 120 d# 120 rect40
-        d# 8 setcolor d# 160 d# 120 rect40
-
-        key drop
-    then
-
-\   h# 8000 scramble drop
+    h# 8000 scramble drop
 \   key drop
 
 0 [IF]

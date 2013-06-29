@@ -38,7 +38,8 @@ variable color
     d# 7 setcolor d# 120 d# 120 rect40
     d# 8 setcolor d# 160 d# 120 rect40
 
-    key drop
+    \ key drop
+    d# 1
 
     80x25
     quit

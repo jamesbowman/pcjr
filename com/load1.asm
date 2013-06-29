@@ -43,10 +43,10 @@ read8:  ; ordered hi4, lo4
         ret
 
 read4:
-; Drop ready
+        ; Drop ready
         mov     al,0
         out     dx,al
-; Wait for valid high
+        ; Wait for valid high
         inc     dx      ;LPT_STATUS
 waitvalid1:
         in      al,dx
@@ -55,12 +55,12 @@ waitvalid1:
         and     al,0f0h ; preserve in bl
         xchg    bx,ax
 
-; Signal READY by raising DATA.0
+        ; Signal READY by raising DATA.0
         dec     dx      ; LPT_DATA
         mov     al,1
         out     dx,al
 
-; Wait for valid low
+        ; Wait for valid low
         inc     dx      ; LPT_STATUS
 waitvalid0:
         in      al,dx
@@ -101,5 +101,8 @@ rdloop:
         call    read8
         stosb
         loop    rdloop
+        ; Drop ready
+        mov     al,0
+        out     dx,al
         ; Because this section is relocated, fall through to 100h
 RELOC1:

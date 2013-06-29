@@ -35,5 +35,6 @@ include numeric.fs
         2r> 1+ 2dup =
     until 2drop d# 100 um/mod nip
     d# 0 <# #s #> type cr
+    d# 0 terminate
     quit
 ;

@@ -45,7 +45,10 @@ int21:
         xchg    ax,cx
         pop     dx
         int     21h
-        NXTAX
+        push    ax
+        push    bx
+        xchg    ax,dx
+        jmp     short pushax
 
 lshift:
         pop     ax
@@ -349,6 +352,8 @@ rpit:
         in      al, 0x40          ; al = high byte of count
         xchg    al,ah        ; al = low byte, ah = high byte
         jmp     pushax
+
+scratch:
 
 rstack:
         times 64 dw 0

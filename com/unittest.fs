@@ -19,6 +19,10 @@ include numeric.fs
     d# 1 d# 2 d# 3
 ;
 
+: pause
+  d# 3000 begin 1- dup 0= until drop
+;
+
 : main
     d# 10 base !
     banner
@@ -121,5 +125,6 @@ include numeric.fs
     cr
     [char] O emit
     [char] K emit
+
     quit
 ;
