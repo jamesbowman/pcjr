@@ -1,0 +1,5 @@
+# python sender.py ../com/unittest.com ; exit
+SKETCH=$HOME/sketchbook/load0
+mkdir -p $SKETCH
+cp load0.cpp $SKETCH/load0.ino
+cp tty.* $SKETCH/
