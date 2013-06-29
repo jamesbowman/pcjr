@@ -4,7 +4,7 @@
 %.i: %.fs
 	gforth cross.fs vm.fs $*.fs > $*.i
 
-all: load0.com load1.com hello.com main.com unittest.com bench.com  uncompress.com x.com
+all: load0.com load1.com hello.com colors.com main.com unittest.com bench.com  uncompress.com x.com
 
 assets.i: Makefile *.png gen.py
 	python gen.py
@@ -13,6 +13,9 @@ main.com: main.asm main.i assets.i common.asm
 
 main.i: main.fs *.fs
 
+colors.com: colors.asm colors.i assets.i common.asm
+
+colors.i: colors.fs *.fs
 
 unittest.com: unittest.asm unittest.i common.asm
 

@@ -21,14 +21,14 @@
 0x20 constant IRR
 
 : ztimer
-    b# 00110100 MODE_8253 io! \ mode 2
-    d# 0 TIMER_0_8253 io!
-    d# 0 TIMER_0_8253 io!
+    b# 00110100 MODE_8253 out \ mode 2
+    d# 0 TIMER_0_8253 out
+    d# 0 TIMER_0_8253 out
 ;
 : timer@
-    b# 00000000 MODE_8253 io! \ latch timer 0
-    TIMER_0_8253 io@
-    TIMER_0_8253 io@
+    b# 00000000 MODE_8253 out \ latch timer 0
+    TIMER_0_8253 in
+    TIMER_0_8253 in
     d# 8 lshift or
     negate
 ;

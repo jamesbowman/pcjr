@@ -42,8 +42,6 @@
 :: @       s" wat    "   aword ;
 :: c!      s" cstore "   aword ;
 :: c@      s" cat    "   aword ;
-:: io!     s" iostore "   aword ;
-:: io@     s" ioat    "   aword ;
 
 :: depth   s" depth  "   aword ;
 :: halt    s" halt   "   aword ;
