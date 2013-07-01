@@ -1,0 +1,51 @@
+\\ Loading the VGA/CRTC for 320x200x16:
+
+\   \ key hex4 cr
+\   h# f h# 01 vga! \ palette mask
+\   h# 0 h# 02 vga!
+
+\   h# 00 h# 10 vga!
+\   h# 01 h# 11 vga!
+\   h# 02 h# 12 vga!
+\   h# 03 h# 13 vga!
+\   h# 04 h# 14 vga!
+\   h# 05 h# 15 vga!
+\   h# 06 h# 16 vga!
+\   h# 07 h# 17 vga!
+\   h# 08 h# 18 vga!
+\   h# 09 h# 19 vga!
+\   h# 0a h# 1a vga!
+\   h# 0b h# 1b vga!
+\   h# 0c h# 1c vga!
+\   h# 0d h# 1d vga!
+\   h# 0e h# 1e vga!
+\   h# 0f h# 1f vga!
+
+\   h# 1b h# 00 vga!
+\   h# 71 h# 00 6845!
+\   h# 50 h# 01 6845!
+\   h# 56 h# 02 6845!
+\   h# 0c h# 03 6845!
+\   h# 3f h# 04 6845!
+
+\   h# 32 h# 06 6845!
+\   h# 38 h# 07 6845!
+\   h# 03 h# 09 6845!
+
+\   b# 11110110 h# 3df out
+
+\  d# 0 d# 0 do
+\      h# f h# 14 vga!
+\      h# 0 h# 14 vga!
+\  loop
+
+    \ key drop
+    \ cli
+    d# 600 begin
+        waitvsync
+        h# 9 border
+        d# 78 xasm rainbow 
+        h# 0 border
+    loop
+    \ sti
+
