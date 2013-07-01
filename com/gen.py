@@ -1,7 +1,8 @@
 import Image
 import array
 
-im = Image.open("card.png")
+# im = Image.open("baby.png")
+im = Image.new("RGB", (320,200))
 
 i0 = 0
 i1 = 0x65
@@ -26,7 +27,7 @@ pal = (
     ( i3,i3,i3,   ),
     )
 pal_image= Image.new("P", (1,1))
-if 0:
+if 1:
     pal_image.putpalette( (
         0,0,0,
         0,0,0xaa,
@@ -35,9 +36,9 @@ if 0:
         0xaa,0,0,
         0xaa,0,0xaa,
         0xaa,0xaa,0,
+        0xaa,0xaa,0xaa,
 
         0x55,0x55,0x55,
-        0xaa,0xaa,0xaa,
         0x55,0x55,0xff,
         0x55,0xff,0x55,
         0x55,0xff,0xff,

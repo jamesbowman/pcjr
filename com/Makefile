@@ -4,12 +4,14 @@
 %.i: %.fs
 	gforth cross.fs vm.fs $*.fs > $*.i
 
-all: load0.com load1.com hello.com colors.com main.com unittest.com bench.com  uncompress.com x.com
+all: load0.com load1.com hello.com colors.com main.com unittest.com bench.com fwrite.com  uncompress.com x.com
 
 assets.i: Makefile *.png gen.py
 	python gen.py
 
 main.com: main.asm main.i assets.i common.asm
+
+fwrite.com: fwrite.asm fwrite.i assets.i common.asm
 
 main.i: main.fs *.fs
 
@@ -44,3 +46,5 @@ x.com: uncompress.com main.lz4
 
 clean::
 	rm -rf *.com *.i *.lz4
+
+.DELETE_ON_ERROR:

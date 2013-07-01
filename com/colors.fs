@@ -1,6 +1,7 @@
 include base.fs
 include bios.fs
 include draw.fs
+include debug.fs
 include numeric.fs
 
 : border ( u -- )
@@ -8,7 +9,7 @@ include numeric.fs
 ;
 
 : tile ( x y - )
-    over d# 16 + over d# 16 + xyaddr >r
+    2dup xyaddr >r
     d# 40 square
     color @ h# f and s>d <# #s #> r> drawstr
 ;
@@ -33,4 +34,3 @@ include numeric.fs
     80x25
     quit
 ;
-

@@ -6,9 +6,16 @@
     h# 200 int21 2drop 2drop
 ;
 
+: int21al
+    int21 2drop drop lobyte
+;
+
+: key? ( -- f )
+    false h# 0b00 int21al 0<>
+;
+
 : key
-    false h# 800 int21
-    2drop drop h# ff and
+    false h# 800 int21al
 ;
 
 : terminate ( code -- )

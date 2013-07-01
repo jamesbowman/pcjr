@@ -2,7 +2,7 @@
 
 variable base
 variable hld
-create pad $14 allot create pad|
+create pad $100 allot create pad|
 
 : <# ( -- ) ( 6.1.0490 )( h# 96 ) pad| HLD ! ;
 : DIGIT ( u -- c ) d# 9 OVER < d# 7 AND + [CHAR] 0 + ;
@@ -15,3 +15,7 @@ create pad $14 allot create pad|
 : #> ( d -- a u ) ( 6.1.0040 ) 2DROP HLD @ pad| OVER - ;
 
 : SIGN ( n -- ) ( 6.1.2210 ) 0< IF [CHAR] - HOLD THEN ;
+
+: .
+    s>d <# #s #> type space
+;
