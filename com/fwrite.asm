@@ -103,6 +103,21 @@ write_file:     ; ( c-addr u fileid -- ior )
 fname:
         db      "FOOBAR02.ABC", 0
 
+writesector:    ; ( track head sector data -- ax )
+        xchg    bx,cx   ; buffer address pointer
+        mov     dl,0
+        pop     ax
+        mov     cl,al   ; sector
+        pop     ax
+        mov     dh,al   ; head
+        pop     ax
+        mov     ch,al   ; track
+
+        mov     ax,0301h
+        int     13h
+
+        jmp     loadax
+
 dta:    times 128 db 0x94
 
 bytecode:

@@ -5,7 +5,6 @@ import array
 import struct
 import math
 import random
-from debugtools import hexdump
 
 class Flow():
     def __init__(self, ser):
@@ -51,12 +50,14 @@ def send(port, payload, reboot = False):
 def com0(names):
     """ Format a COM file for the load0 receiver """
     (name,) = names
+    return open(name).read().ljust(256)
+
     d = array.array('B', open(name).read())
     d4 = []
     for c in d:
         d4.append(c)
         d4.append((c & 15) << 4)
-    return array.array('B', d4).tostring().ljust(512)
+    # return array.array('B', d4).tostring().ljust(512)
 
 def com1(names):
     """ Format a COM file for the load1 receiver """
@@ -64,10 +65,13 @@ def com1(names):
     pgm = open(name).read()
     d = array.array('B', struct.pack(">H", len(pgm)) + pgm)
 
-    b = [0,0] + [0x50, 0xa0, 0x90, 0x70]
-    for c in d:
-        b.append(c & 0xf0)
-        b.append((c & 15) << 4)
+    if 0:
+        b = [0,0] + [0x50, 0xa0, 0x90, 0x70]
+        for c in d:
+            b.append(c & 0xf0)
+            b.append((c & 15) << 4)
+    else:
+        b = [0x00, 0x5a, 0x97] + d.tolist()
     b = array.array('B', b).tostring()
     print 'len', name, hex(len(b))
     b = b.rjust((len(b) + 255) & ~255, chr(0))
@@ -75,25 +79,35 @@ def com1(names):
     return b
 
 def com2(names):
-    """ Format a COM file for the load1 receiver """
+    """ Format a COM file for the "fwrite' receiver """
     d = []
     for name in names:
         pgm = open(name).read()
-        dosname = os.path.basename(name).upper()
-        d += [dosname, chr(0)]
-        for i in range(0, len(pgm), 256):
-            sub = pgm[i:i+256]
-            d.append(struct.pack("<H", len(sub)))
-            d.append(sub)
-        d.append(struct.pack("<H", 0))
-    d += chr(0) # zero-length filename terminates the run
+        img =  name.lower().endswith(".img")
+        if img:
+            dosname = chr(232)
+            d += [dosname, chr(0)]
+            d += [pgm]
+        else:
+            dosname = os.path.basename(name).upper()
+            d += [dosname, chr(0)]
+            for i in range(0, len(pgm), 256):
+                sub = pgm[i:i+256]
+                d.append(struct.pack("<H", len(sub)))
+                d.append(sub)
+            d.append(struct.pack("<H", 0))
+    if not img:
+        d += chr(0) # zero-length filename terminates the run
     d = array.array('B', "".join(d))
+    print 'sending', len(d)
 
-    print hexdump(d.tostring())
-    b = [0,0] + [0x50, 0xa0, 0x90, 0x80]
-    for c in d:
-        b.append(c & 0xf0)
-        b.append((c & 15) << 4)
+    if 0:
+        b = [0,0] + [0x50, 0xa0, 0x90, 0x80]
+        for c in d:
+            b.append(c & 0xf0)
+            b.append((c & 15) << 4)
+    else:
+        b = [0x00, 0x5a, 0x98] + d.tolist()
     b = array.array('B', b).tostring()
     print 'len', name, hex(len(b))
     b = b.rjust((len(b) + 255) & ~255, chr(0))

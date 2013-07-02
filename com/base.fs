@@ -75,6 +75,9 @@
     2swap
 ;
 
+: 3rd   >r over r> swap ;
+: 3dup  3rd 3rd 3rd ;
+
 ( Double word                                JCB 10:14 06/25/13)
 
 : s>d       dup 0< ;

@@ -103,11 +103,12 @@ void loop()
   for (int i = 0; i < 256; i++) {
     byte c = buf[i];
     s += c;
-    c ^= 0x8b;  // invert the signals that PC LPT inverts
+    c ^= 0x88;  // invert the signals that PC LPT inverts
     // opendrain(A0, (c >> 0) & 1);
     // digitalWrite(A1, ((c >> 1) & 1));
     // opendrain(A2, ((c >> 2) & 1));
     // opendrain(A3, ((c >> 3) & 1));
+
     digitalWrite(A4, ((c >> 4) & 1));
     digitalWrite(A5, ((c >> 5) & 1));
     digitalWrite(6,  ((c >> 6) & 1));
@@ -117,6 +118,17 @@ void loop()
     while (digitalRead(READY) == 0) ;
     digitalWrite(VALID, LOW);
     while (digitalRead(READY) == 1) ;
+
+    digitalWrite(A4, ((c >> 0) & 1));
+    digitalWrite(A5, ((c >> 1) & 1));
+    digitalWrite(6,  ((c >> 2) & 1));
+    digitalWrite(7,  ((c >> 3) & 1));
+
+    digitalWrite(VALID, HIGH);
+    while (digitalRead(READY) == 0) ;
+    digitalWrite(VALID, LOW);
+    while (digitalRead(READY) == 1) ;
+
     plot(i, 0x80);
   }
   Serial.write(s);

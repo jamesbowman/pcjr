@@ -1,12 +1,11 @@
 %include "common.asm"
 
 simple:
-        nop
-        nop
-        nop
-        nop
-        nop
-        mov ax,3
+        xchg    cx,bp
+        mov     cx,111
+dwell:  
+        loop    dwell
+        xchg    cx,bp
         jmp next
 
 bytecode:

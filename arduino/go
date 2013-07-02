@@ -1,5 +1,5 @@
-python sender.py -p2 unittest.com ; exit
+# python sender.py -p2 unittest.com ; exit
 SKETCH=$HOME/sketchbook/load0
 mkdir -p $SKETCH
 cp load0.cpp $SKETCH/load0.ino
-cp tty.* $SKETCH/
+# cp tty.* $SKETCH/

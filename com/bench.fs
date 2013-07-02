@@ -21,8 +21,9 @@ include numeric.fs
     banner
 
     d# 0.
-    d# 100 d# 0 begin
-        2>r
+    cli
+    d# 100 begin
+        >r
         xasm rpit
         \ d# 100 d# 0 begin
         \     1+ 2dup =
@@ -32,9 +33,9 @@ include numeric.fs
         -
         \ d# 110 - d# 4 um*
         d# 0 d+
-        2r> 1+ 2dup =
-    until 2drop d# 100 um/mod nip
-    d# 0 <# #s #> type cr
-    d# 0 terminate
+        r>
+    loop
+    sti
+    <# # # [char] . hold #s #> type cr
     quit
 ;

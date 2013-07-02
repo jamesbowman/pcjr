@@ -130,6 +130,12 @@ include numeric.fs
 \         VOICE3 atten
 \ ;
 
+: shape ( u -- )
+    waitvsync
+    d# 15 xor
+    NOISE atten
+;
+
 : music
     false if
         pause
@@ -190,7 +196,8 @@ include numeric.fs
 \       loop
 \       sti
 \   then
-    true if
+
+    false if
         begin
             l# sample
             l# sample_size
@@ -207,6 +214,21 @@ include numeric.fs
         key? until
         key drop
     then
+
+    true if
+        d# 4 ntype
+        begin
+            d# 8 shape
+            d# 15 shape
+            d# 12 shape
+            d# 8 shape
+            d# 4 shape
+            d# 0 shape
+            pause
+        quitkey until
+    then
+
+    silence
 ;
 
 : main
@@ -291,6 +313,8 @@ include numeric.fs
     loop
 [THEN]
 
+    \ xasm spin
+
     -t-
 
     \ d# 24 begin
@@ -301,8 +325,7 @@ include numeric.fs
     80x25
     took
 
-    /sound
-    music
+    /sound music
 
     snap
     quit

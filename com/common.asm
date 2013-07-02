@@ -400,7 +400,6 @@ _6845store:
         jmp     drop
 
 rpit:
-        cli
         mov     al, 00000000b    ; al = channel in bits 6 and 7, remaining bits clear
         out     0x43, al         ; Send the latch command
  

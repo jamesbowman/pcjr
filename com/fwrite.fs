@@ -11,6 +11,16 @@ include numeric.fs
     emit cr
 ;
 
+: read512
+    pad d# 512 bounds
+    begin
+        2dup xor
+    while
+        xasm read8 over c!
+        1+
+    repeat 2drop
+;
+
 : main
     d# 10 base !
 
@@ -39,6 +49,20 @@ include numeric.fs
         [char] ] emit cr
 
         pad c@ 0= if
+            d# 0 terminate
+        then
+
+        pad c@ d# 232 = if
+            d# 0 begin  \ track
+                d# 0 begin \ head
+                    d# 1 begin \ sector
+                    3rd . over . dup . cr
+                        read512
+                        3dup
+                        pad xasm writesector hex4 cr
+                    1+ dup d# 10 = until drop
+                1+ dup d# 2 = until drop
+            1+ dup d# 40 = until drop
             d# 0 terminate
         then
 
