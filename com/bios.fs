@@ -54,9 +54,8 @@
     if abort then
 ;
 
-: 320x200x16
-    h# 0009 xasm int10
-;
+: 320x200x4  h# 0005 xasm int10 ;
+: 320x200x16 h# 0009 xasm int10 ;
 
 : 80x25
     h# 0003 xasm int10

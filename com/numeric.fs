@@ -2,7 +2,8 @@
 
 variable base
 variable hld
-create pad $200 allot create pad|
+: pad l# pad ;
+: pad| pad d# 80 + ;
 
 : <# ( -- ) ( 6.1.0490 )( h# 96 ) pad| HLD ! ;
 : DIGIT ( u -- c ) d# 9 OVER < d# 7 AND + [CHAR] 0 + ;

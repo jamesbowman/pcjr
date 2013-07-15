@@ -9,11 +9,19 @@ all: load0.com load1.com hello.com colors.com main.com unittest.com bench.com fw
 assets.i: Makefile *.png gen.py
 	python gen.py
 
-main.com: main.asm main.i assets.i common.asm
 
-fwrite.com: fwrite.asm fwrite.i assets.i common.asm
+main.com: main.asm main.i assets.i common.asm dsprite.i sdanim.bi
 
 main.i: main.fs *.fs
+
+dsprite.i: gendsprite.py
+	python $<
+
+sdanim.bi: genanim.py
+	python $<
+
+
+fwrite.com: fwrite.asm fwrite.i assets.i common.asm
 
 colors.com: colors.asm colors.i assets.i common.asm
 

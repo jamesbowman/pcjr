@@ -11,4 +11,4 @@ dwell:
 bytecode:
 %include "bench.i"
 end_bytecode:
-
+        ENDIT

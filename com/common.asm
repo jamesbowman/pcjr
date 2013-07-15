@@ -17,7 +17,7 @@ start:
 
         mov     si,end_bytecode-2
         mov     di,rstack
-        mov     sp,dstack+64
+        mov     sp,dstack+512
         NXT
 
 exit:
@@ -65,7 +65,7 @@ _2div:
         NXT
 
 depth:
-        mov     ax,dstack+64
+        mov     ax,dstack+512
         sub     ax,sp
         shr     ax,1
         jmp     short pushax
@@ -271,6 +271,22 @@ esstore:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+sliteral:
+        mov     ah,0
+        lodsb
+        push    cx
+        mov     cx,si
+        add     si,ax
+        jmp     pushax
+
+zliteral:
+        mov     ah,0
+        lodsb
+        push    cx
+        mov     cx,si
+        add     si,ax
+        jmp     next
+
 int10:  ; ( ax -- )
         push    si
         push    di
@@ -458,7 +474,8 @@ d2pix:
         pop     ds
         jmp     drop
 
-rstack:
-        times 64 dw 0
-dstack:
-        times 64 dw 0
+%macro  ENDIT   0
+rstack: equ     $
+dstack: equ     $+512
+pad:    equ     $+1024
+%endmacro

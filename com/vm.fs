@@ -73,6 +73,10 @@ map cli     _cli"
 map sti     _sti"
 map down1   down1"
 map waitvsync   waitvsync"
+map wait1   wait1"
+map >au     toau"
+map freq    freq"
+map lerp    lerp"
 
 : str-name ( "name" -- addr ) >in @ name >str swap >in ! ; immediate
 

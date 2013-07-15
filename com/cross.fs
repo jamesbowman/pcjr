@@ -183,6 +183,31 @@ warnings off
     s" _loop" branch
 ;
 
+:: s"
+    tab ." dw sliteral" cr
+    [char] " parse
+    dup tab ." db " . cr
+    bounds begin
+        2dup <>
+    while
+        dup c@ tab ." db " . cr
+        1+
+    repeat 2drop
+;
+
+:: z"
+    tab ." dw zliteral" cr
+    [char] " parse
+    dup tab ." db " 1+ . cr
+    bounds begin
+        2dup <>
+    while
+        dup c@ tab ." db " . cr
+        1+
+    repeat 2drop
+    tab ." db 0" cr
+;
+
 \ 
 \ :: for      s" d# 0 >r" evaluate there ;
 \ :: next     s" loop" evaluate 2/ 0branch s" rdrop" evaluate ;
