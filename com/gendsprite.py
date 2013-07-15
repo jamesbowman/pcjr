@@ -40,8 +40,8 @@ for y in range(64):
         # im = im.rotate(y * 360. / NFRAMES).resize((DIM,DIM), Image.BILINEAR)
         phi0 = math.pi * y / NFRAMES
         phi1 = phi0 + math.pi
-        draw.line((47.5 + 40 * math.sin(phi0), 47.5 + 40 * math.cos(phi0),
-                   47.5 + 40 * math.sin(phi1), 47.5 + 40 * math.cos(phi1)), fill = 255, width = 9.5)
+        draw.line((int(47.5 + 40 * math.sin(phi0)), int(47.5 + 40 * math.cos(phi0)),
+                   int(47.5 + 40 * math.sin(phi1)), int(47.5 + 40 * math.cos(phi1))), fill = 255, width = 9)
         im = im.resize((DIM,DIM), Image.BILINEAR)
         pix = im.load()
         if 1:

@@ -468,7 +468,7 @@ include numeric.fs
     \ d# 682 d# 454 sweep5th/64   d# 240 tremolo
 
     d# 1 begin
-        false if
+        true if
             d# 2 begin
                 h# 100 dup perfect5th dyad wait240
                 h# 180 dup perfect5th dyad wait240
@@ -481,15 +481,6 @@ include numeric.fs
             loop
         then
 
-        false if
-            d# 10 begin
-                drumup
-                drumup
-                drumdown
-                drumdown
-            loop
-        then
-
         true if
             3.cycle-a
             3.cycle-b
@@ -498,7 +489,7 @@ include numeric.fs
         then
 
         \ third voice enters on 71
-        false if
+        true if
             h# 71 VOICE3 freq
             d# 15 begin
                 dup VOICE3 atten
@@ -514,7 +505,7 @@ include numeric.fs
                 d# 15 over 2* - VOICE3 atten
             loop
         then
-        false if
+        true if
             h# 4c VOICE3 freq
             d# 6 begin
                 dup 2* VOICE3 atten

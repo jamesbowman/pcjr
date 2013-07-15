@@ -2,4 +2,5 @@
 # gforth cross.fs vm.fs main.fs ; exit
 TGT=x.com
 time make $TGT || exit
+exit
 python ../arduino/sender.py -r -h /dev/ttyUSB0 $TGT || exit
