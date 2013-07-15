@@ -2,3 +2,6 @@
 *.lst
 *.i
 *.lz4
+*.pic
+out.png
+out??.png
